@@ -3,7 +3,7 @@ const Schema=mongoose.Schema;
 
 const congregacionSchema=new Schema({
     nombre:{
-        type:string,
+        type:String,
         required:true,
         unique:true
     },
