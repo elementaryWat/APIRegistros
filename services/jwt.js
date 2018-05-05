@@ -1,5 +1,6 @@
 const jwt=require("jwt-simple");
 const moment=require("moment");
+var secret="publicadores_norte_barranqueras";
 
 exports.createToken=(user)=>{
     var payload={
@@ -8,5 +9,5 @@ exports.createToken=(user)=>{
         iat:moment().unix(),
         exp:moment().add(14,"days").unix()
     }
-    return jwt.encode(payload,"mean_spotify_mini");
+    return jwt.encode(payload,secret);
 }

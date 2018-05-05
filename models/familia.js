@@ -3,7 +3,7 @@ const Schema=mongoose.Schema;
 
 var FamiliaSchema=new Schema({
     apellido:{
-        type:string,
+        type:String,
         required:true
     },
     congregacion:{

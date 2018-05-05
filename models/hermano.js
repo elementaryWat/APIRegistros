@@ -1,6 +1,7 @@
-const Schema=require('mongoose').Schema;
+const mongoose=require('mongoose');
+const Schema=mongoose.Schema;
 
-const hermanoSchema=new Schema({
+const HermanoSchema=new Schema({
     nombre:{
         type:String,
         required:true,
@@ -51,3 +52,5 @@ const hermanoSchema=new Schema({
 },{
     timestamps:true
 })
+
+module.exports=mongoose.model("Hermano",HermanoSchema);
