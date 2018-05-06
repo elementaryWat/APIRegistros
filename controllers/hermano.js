@@ -27,6 +27,22 @@ function agregarHermano(req,res){
     })
 }
 
+function actualizarDatosHermano(req,res){
+    var update=req.body;
+    var hermanoId=req.params.hermanoId;
+    Hermanos.findByIdAndUpdate(hermanoId)
+        .then(hermanoActualizado=>{
+            if(hermanoActualizado){
+                res.status(200).send({updated:true,hermano:hermanoActualizado});
+            }else{
+                res.status(404).send({updated:false,message:"No se ha encontrado al hermano"});                
+            }
+        })
+        .catch(error=>{
+            res.status(404).send({updated:false,error,message:"Ha ocurrido un error al actualizar los datos del hermano"});                            
+        })
+}
+
 function agregarFamilia(req,res){
     Familias.create({
         apellido:req.body.apellido,
@@ -41,5 +57,6 @@ function agregarFamilia(req,res){
 
 module.exports={
     agregarHermano,
+    actualizarDatosHermano,
     agregarFamilia
 }

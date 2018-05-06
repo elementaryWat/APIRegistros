@@ -44,13 +44,13 @@ function loginUsuario(req, res) {
                 bcrypt.compare(req.body.password,userConEmail.password)
                 .then(equal=>{
                     if(equal){
-                        res.status(200).send({logged:true,token:jwt.createToken(userConEmail),userConEmail});
+                        res.status(200).send({logged:true,token:jwt.createToken(userConEmail),user:userConEmail});
                     }else{
-                        res.status(404).send({logged:false});
+                        res.status(404).send({logged:false,message:"Email o contraseña incorrectos"});
                     }
                 })
             }else{
-                res.status(404).send({logged:false});
+                res.status(404).send({logged:false,message:"Email o contraseña incorrectos"});
             }
         })
         .catch(error => {

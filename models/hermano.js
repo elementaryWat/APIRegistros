@@ -41,7 +41,7 @@ const HermanoSchema=new Schema({
         type:Boolean,
         required:true
     },
-    siervoministerial:Boolean,
+    siervoMinisterial:Boolean,
     anciano:Boolean,
     precReg:{
        type:Boolean,
