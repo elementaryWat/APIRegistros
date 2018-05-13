@@ -20,6 +20,30 @@ app.set('port', port);
  */
 
 var server = http.createServer(app);
+var io = require('socket.io')(server);
+io.on('connection',(socket)=>{
+  console.log("Se crea una conexion webSocket");
+  socket.on('disconnect', function(){
+    console.log('Se elimina una conexion webSocket');
+  });
+  socket.on('familias',()=>{
+    io.sockets.emit('familias');
+  })
+  socket.on('lista-familias-inicial',()=>{
+    socket.emit('familias');
+  })
+  socket.on('hermanos-familia',(idFamilia)=>{
+    console.log("Se emitio a todos los sockets");
+    io.sockets.emit('hermanos-familia',idFamilia);
+  })
+  socket.on('lista-hermanos-familia-inicial',(idFamilia)=>{
+    console.log("Se emitio a un socket");
+    socket.emit('hermanos-familia',idFamilia);
+  })
+  /* socket.on('albums-list-updated',()=>{
+    io.sockets.emit('albums');
+  }) */
+})
 
 /**
  * Listen on provided port, on all network interfaces.
