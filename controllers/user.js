@@ -38,7 +38,7 @@ function registrarCongregacion(req, res) {
         })
 }
 function loginUsuario(req, res) {
-    Users.findOne({ email: req.body.email }).exec()
+    Users.findOne({ email: req.body.email }).populate({path:'congregacion'}).exec()
         .then(userConEmail => {
             if (userConEmail) {
                 bcrypt.compare(req.body.password,userConEmail.password)

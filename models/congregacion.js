@@ -10,6 +10,10 @@ const congregacionSchema=new Schema({
     direccion:{
         type:String,
         required:true
+    },
+    cantidadGrupos:{
+        type:Number,
+        required:true
     }
 },{
     timestamps:true

@@ -19,6 +19,7 @@
     "mongoose": "^5.0.17",
     "mongoose-pagination": "^1.0.0",
     "morgan": "~1.9.0",
-    "nodemon": "^1.17.3"
+    "nodemon": "^1.17.3",
+    "socketio": "^1.0.0"
   }
 }
