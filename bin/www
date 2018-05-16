@@ -29,6 +29,9 @@ io.on('connection',(socket)=>{
   socket.on('familias',()=>{
     io.sockets.emit('familias');
   })
+  socket.on('lista-familias-updated',()=>{
+    io.sockets.emit('familias');
+  })
   socket.on('lista-familias-inicial',()=>{
     socket.emit('familias');
   })

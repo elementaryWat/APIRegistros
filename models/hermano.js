@@ -1,4 +1,5 @@
 const mongoose=require('mongoose');
+const telefonoSchema=require('./telefono');
 const Schema=mongoose.Schema;
 
 const HermanoSchema=new Schema({
@@ -25,6 +26,7 @@ const HermanoSchema=new Schema({
     },
     telefono:String,
     celular:String,
+    datosContacto:[telefonoSchema],
     fechaNacimiento:{
         type:Date,
         required:true
@@ -33,10 +35,7 @@ const HermanoSchema=new Schema({
         type:Boolean,
         required:true
     },
-    fechaBautismo:{
-        type:Date,
-        required:true
-    },
+    fechaBautismo:Date,
     ungido:{
         type:Boolean,
         required:true

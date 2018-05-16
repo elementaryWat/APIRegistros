@@ -8,5 +8,7 @@ hermanoRouter.get('/listaFamilias/:congregacion',mwAuthenticated.ensureAuth,herm
 hermanoRouter.get('/listaHermanos/:familia',mwAuthenticated.ensureAuth,hermanoController.obtenerHermanosFamilia);
 hermanoRouter.post('/actualizar',mwAuthenticated.ensureAuth,hermanoController.actualizarDatosHermano);
 hermanoRouter.post('/agregarFamilia',mwAuthenticated.ensureAuth,hermanoController.agregarFamilia);
+hermanoRouter.put('/editarFamilia/:familiaId',mwAuthenticated.ensureAuth,hermanoController.editarFamilia);
+hermanoRouter.post('/existeFamilia',mwAuthenticated.ensureAuth,hermanoController.existeFamilia);
 
 module.exports=hermanoRouter;   

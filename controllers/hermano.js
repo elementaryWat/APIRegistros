@@ -10,6 +10,7 @@ function agregarHermano(req, res) {
         grupo: req.body.grupo,
         telefono: req.body.telefono,
         celular: req.body.celular,
+        datosContacto: req.body.datosContacto,
         fechaNacimiento: req.body.fechaNacimiento,
         bautizado: req.body.bautizado,
         fechaBautismo: req.body.fechaBautismo,
@@ -19,9 +20,9 @@ function agregarHermano(req, res) {
         precReg: req.body.precReg,
         idPrecursor: req.body.idPrecursor,
         fechaNombramientoPrecursor: req.body.fechaNombramientoPrecursor,
-        }).then(nuevoHermano => {
-            res.status(200).send({ created: true, hermano: nuevoHermano });
-        })
+    }).then(nuevoHermano => {
+        res.status(200).send({ created: true, hermano: nuevoHermano });
+    })
         .catch(error => {
             res.status(500).send({ created: false, error, message: "Ha ocurrido un error al agregar al hermano" });
         })
@@ -30,7 +31,7 @@ function agregarHermano(req, res) {
 function actualizarDatosHermano(req, res) {
     let hermanoId = req.params.hermanoId;
     let update = req.body;
-    Hermanos.findByIdAndUpdate(hermanoId, { $set:update }, { new: true }).exec()
+    Hermanos.findByIdAndUpdate(hermanoId, { $set: update }, { new: true }).exec()
         .then(hermanoActualizado => {
             res.status(200).send({ updated: true, hermano: hermanoActualizado });
         })
@@ -39,13 +40,13 @@ function actualizarDatosHermano(req, res) {
         })
 }
 
-function editarFamilia(req, res) {  
-    
+function editarFamilia(req, res) {
+
 }
 
 function obtenerFamilias(req, res) {
     let congregacion = req.params.congregacion;
-    Familias.find({ congregacion: congregacion }).exec()
+    Familias.find({ congregacion: congregacion }).sort('apellido').exec()
         .then(familias => {
             res.status(200).send({ familias });
         })
@@ -55,7 +56,7 @@ function obtenerFamilias(req, res) {
 }
 function obtenerHermanosFamilia(req, res) {
     let familia = req.params.familia;
-    Hermanos.find({ familia: familia }).sort("fechaNacimiento").exec()
+    Hermanos.find({ familia: familia }).sort('fechaNacimiento').exec()
         .then(hermanos => {
             res.status(200).send({ hermanos });
         })
@@ -65,15 +66,36 @@ function obtenerHermanosFamilia(req, res) {
 }
 
 function agregarFamilia(req, res) {
-    Familias.create({
-        apellido: req.body.apellido,
-        congregacion: req.body.congregacion
-    }).then(nuevaFamilia => {
+    Familias.create(req.body).then(nuevaFamilia => {
         res.status(200).send({ created: true, familia: nuevaFamilia });
     })
-        .catch(error => {
-            res.status(500).send({ created: false, error, message: "Ha ocurrido un error al agregar la familia" })
-        })
+    .catch(error => {
+        res.status(500).send({ created: false, error, message: "Ha ocurrido un error al agregar la familia" })
+    })
+}
+function editarFamilia(req, res) {
+    let update=req.body;
+    let familiaId=req.params.familiaId;
+    Familias.findByIdAndUpdate(familiaId,{$set:update},{new:true}).then(familiaActualizada => {
+        res.status(200).send({ updated: true, familia: familiaActualizada });
+    })
+    .catch(error => {
+        res.status(500).send({ update: false, error, message: "Ha ocurrido un error al actualizar la familia" })
+    })
+}
+
+function existeFamilia(req, res) {
+    let familia=req.body;
+    Familias.find(familia).exec().then(familias => {
+        if(familias.length>0){
+            res.status(200).send({founded:true });
+        }else{
+            res.status(200).send({founded:false });            
+        }
+    })
+    .catch(error => {
+        res.status(500).send({ founded: false, error, message: "Ha ocurrido un error al buscar las familias" })
+    })
 }
 
 module.exports = {
@@ -81,5 +103,7 @@ module.exports = {
     actualizarDatosHermano,
     obtenerFamilias,
     obtenerHermanosFamilia,
-    agregarFamilia
+    agregarFamilia,
+    editarFamilia,
+    existeFamilia
 }
