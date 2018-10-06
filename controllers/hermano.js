@@ -55,8 +55,22 @@ function obtenerFamilias(req, res) {
         })
 }
 function obtenerHermanosFamilia(req, res) {
+    console.log(req.body);    
     let familia = req.params.familia;
-    Hermanos.find({ familia: familia }).sort('fechaNacimiento').exec()
+    let tipo = req.body.tipo;
+    let queryTipo={familia};
+    switch (tipo) {
+        case 'siervosministeriales':
+            queryTipo = { familia: familia, siervoMinisterial: true };
+            break;
+        case 'ancianos':
+            queryTipo = { familia: familia, anciano: true };
+            break;
+        case 'precursores':
+            queryTipo = { familia: familia, precReg: true };
+            break;
+    }
+    Hermanos.find(queryTipo).sort('fechaNacimiento').exec()
         .then(hermanos => {
             res.status(200).send({ hermanos });
         })
@@ -69,33 +83,49 @@ function agregarFamilia(req, res) {
     Familias.create(req.body).then(nuevaFamilia => {
         res.status(200).send({ created: true, familia: nuevaFamilia });
     })
-    .catch(error => {
-        res.status(500).send({ created: false, error, message: "Ha ocurrido un error al agregar la familia" })
-    })
+        .catch(error => {
+            res.status(500).send({ created: false, error, message: "Ha ocurrido un error al agregar la familia" })
+        })
 }
 function editarFamilia(req, res) {
-    let update=req.body;
-    let familiaId=req.params.familiaId;
-    Familias.findByIdAndUpdate(familiaId,{$set:update},{new:true}).then(familiaActualizada => {
+    console.log(req.body);
+    let update = req.body;
+    let familiaId = req.params.familiaId;
+    Familias.findByIdAndUpdate(familiaId, { $set: update }, { new: true }).then(familiaActualizada => {
         res.status(200).send({ updated: true, familia: familiaActualizada });
     })
-    .catch(error => {
-        res.status(500).send({ update: false, error, message: "Ha ocurrido un error al actualizar la familia" })
+        .catch(error => {
+            res.status(500).send({ update: false, error, message: "Ha ocurrido un error al actualizar la familia" })
+        })
+}
+
+function existeIntegranteEnFamilia(req, res) {
+    let integrante = req.body;
+    console.log(integrante);
+    Hermanos.find(integrante).exec().then(hermanos => {
+        if (hermanos.length > 0) {
+            res.status(200).send({ founded: true });
+        } else {
+            res.status(200).send({ founded: false });
+        }
     })
+        .catch(error => {
+            res.status(500).send({ founded: false, error, message: "Ha ocurrido un error al buscar los hermanos" })
+        })
 }
 
 function existeFamilia(req, res) {
-    let familia=req.body;
+    let familia = req.body;
     Familias.find(familia).exec().then(familias => {
-        if(familias.length>0){
-            res.status(200).send({founded:true });
-        }else{
-            res.status(200).send({founded:false });            
+        if (familias.length > 0) {
+            res.status(200).send({ founded: true });
+        } else {
+            res.status(200).send({ founded: false });
         }
     })
-    .catch(error => {
-        res.status(500).send({ founded: false, error, message: "Ha ocurrido un error al buscar las familias" })
-    })
+        .catch(error => {
+            res.status(500).send({ founded: false, error, message: "Ha ocurrido un error al buscar las familias" })
+        })
 }
 
 module.exports = {
@@ -105,5 +135,6 @@ module.exports = {
     obtenerHermanosFamilia,
     agregarFamilia,
     editarFamilia,
-    existeFamilia
+    existeFamilia,
+    existeIntegranteEnFamilia
 }
