@@ -29,6 +29,7 @@ function registrarCongregacion(req, res) {
     var nuevaCongregacion = new Congregacion();
     nuevaCongregacion.nombre = req.body.nombre;
     nuevaCongregacion.direccion = req.body.direccion;
+    nuevaCongregacion.cantidadGrupos = req.body.cantidadGrupos;
     nuevaCongregacion.save()
         .then(congregacion => {
             res.status(200).send({ created: true, congregacion })
