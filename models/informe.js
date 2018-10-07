@@ -41,8 +41,7 @@ const InformeSchema=new Schema({
         required:true
     },
     notas:{
-        type:String,
-        required:true
+        type:String
     },
     precReg:{
         type:Boolean,

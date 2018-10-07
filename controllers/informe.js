@@ -1,7 +1,7 @@
 const Informes = require('../models/informe');
 
 function agregarInforme(req, res) {
-    Hermanos.create(req.body).then(nuevoInforme => {
+    Informes.create(req.body).then(nuevoInforme => {
         res.status(200).send({ created: true, informe: nuevoInforme });
     })
     .catch(error => {
