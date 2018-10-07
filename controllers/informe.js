@@ -11,11 +11,10 @@ function agregarInforme(req, res) {
 
 function obtenerInformes(req, res) {
     let congregacion = req.params.congregacion;
-
-    Informes.aggregate()
-        .lookup({ from: 'Hermanos', localField: 'hermano', foreignField: '_id', as: 'hermano' })
-        .lookup({ from: 'Familias', localField: 'familia', foreignField: '_id', as: 'hermano.familia' })
-        .exec()
+    //Devuelve los informes de los hermanos de una congregacion
+    Informes.find().populate({path:'hermano',populate:{path:'familia'}})
+    .match({ 'hermano.familia.congregacion': congregacion})
+    .exec()
         .then(informes => {
             res.status(200).send({ informes });
         })
