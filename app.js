@@ -7,7 +7,7 @@ var mongoose=require("mongoose");
 var cors=require('cors');
 
 /* var url="mongodb://localhost:27017/informes"; */
-var url="mongodb://<admin>:<admin15min>@ds155278.mlab.com:55278/heroku_t8d64ftk";
+var url="mongodb://admin:admin15min@ds155278.mlab.com:55278/heroku_t8d64ftk";
 mongoose.connect(url).then(db=>{
   console.log("Se ha conectado a la base de datos");
 })
