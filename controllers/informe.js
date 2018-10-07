@@ -12,7 +12,7 @@ function agregarInforme(req, res) {
 function obtenerInformes(req, res) {
     let congregacion = req.params.congregacion;
     //Devuelve los informes de los hermanos de una congregacion
-    Informes.populate({path:'hermano',populate:{path:'familia'}})
+    Informes.find({}).populate({path:'hermano',populate:{path:'familia'}})
     .find({ 'hermano.familia.congregacion': congregacion})
     .exec()
         .then(informes => {
