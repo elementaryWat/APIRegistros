@@ -3,11 +3,11 @@ const Schema=mongoose.Schema;
 
 const InformeSchema=new Schema({
     month:{
-        type:number,
+        type:Number,
         required:true,
     },
     year:{
-        type:number,
+        type:Number,
         required:true,
     },
     congregacion:{
