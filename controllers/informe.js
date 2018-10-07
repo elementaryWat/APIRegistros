@@ -11,7 +11,8 @@ function agregarInforme(req, res) {
 
 function obtenerInformes(req, res) {
     let congregacion = req.params.congregacion;
-    Informes.find({ congregacion: congregacion }).exec()
+    //Devuelve los informes de los hermanos de una congregacion
+    Informes.find({ hermano: {familia : {congregacion:congregacion}} }).exec()
         .then(informes => {
             res.status(200).send({ informes });
         })

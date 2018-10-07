@@ -10,11 +10,6 @@ const InformeSchema=new Schema({
         type:Number,
         required:true,
     },
-    congregacion:{
-        type:Schema.Types.ObjectId,
-        ref:'Congregacion',
-        required:true
-    },
     hermano:{
         type:Schema.Types.ObjectId,
         ref:'Hermano',
