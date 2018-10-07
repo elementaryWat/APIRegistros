@@ -16,7 +16,7 @@ function obtenerInformes(req, res) {
         .lookup({ from: 'Hermanos', localField: 'hermano', foreignField: '_id', as: 'hermano' })
         .lookup({ from: 'Familias', localField: 'familia', foreignField: '_id', as: 'hermano.familia' })
         .match({ 'hermano.familia.congregacion': congregacion})
-        exec()
+        .exec()
         .then(informes => {
             res.status(200).send({ informes });
         })
