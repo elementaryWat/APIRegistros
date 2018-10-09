@@ -14,6 +14,8 @@ function agregarInforme(req, res) {
 
 function obtenerInformes(req, res) {
     let congregacion = req.params.congregacion;
+    let month=req.query.month;
+    let year=req.query.year;
     /* Informes.find({}).populate({path:'hermano',populate:{path:'familia', match:{ congregacion:congregacion}}})
     .where('hermano.familia').equals(null) */
     //Devuelve los informes de los hermanos de familias de una congregacion
@@ -23,7 +25,7 @@ function obtenerInformes(req, res) {
             Hermanos.find({familia: {$in: idsFamiliasCong}}).exec()
                 .then(hermanosCong=>{
                     var idsHermanosCong=hermanosCong.map((hermano)=>{return hermano._id});
-                    Informes.find({hermano: {$in: idsHermanosCong}})
+                    Informes.find({hermano: {$in: idsHermanosCong}, month, year})
                     .exec()
                     .then(informes => {
                         res.status(200).send({ informes }); 
