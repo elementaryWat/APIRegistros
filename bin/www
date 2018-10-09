@@ -43,6 +43,16 @@ io.on('connection',(socket)=>{
     console.log("Se emitio a un socket");
     socket.emit('hermanos-familia',idFamilia);
   })
+
+  socket.on('informes',()=>{
+    io.sockets.emit('informes');
+  })
+  socket.on('lista-informes-updated',()=>{
+    io.sockets.emit('informes');
+  })
+  socket.on('lista-informes-inicial',()=>{
+    socket.emit('informes');
+  })
   /* socket.on('albums-list-updated',()=>{
     io.sockets.emit('albums');
   }) */
