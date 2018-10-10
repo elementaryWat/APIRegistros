@@ -3,15 +3,6 @@ const Hermanos = require('../models/hermano');
 const Familias = require('../models/familia');
 
 
-function agregarInforme(req, res) {
-    Informes.create(req.body).then(nuevoInforme => {
-        res.status(200).send({ created: true, informe: nuevoInforme });
-    })
-    .catch(error => {
-        res.status(500).send({ created: false, error, message: "Ha ocurrido un error al agregar el informe" });
-    })
-}
-
 function obtenerInformes(req, res) {
     let congregacion = req.params.congregacion;
     let month=req.query.month;
@@ -39,7 +30,29 @@ function obtenerInformes(req, res) {
     
 }
 
+function agregarInforme(req, res) {
+    Informes.create(req.body).then(nuevoInforme => {
+        res.status(200).send({ created: true, informe: nuevoInforme });
+    })
+    .catch(error => {
+        res.status(500).send({ created: false, error, message: "Ha ocurrido un error al agregar el informe" });
+    })
+}
+
+function actualizarDatosInforme(req, res) {
+    let informeId = req.params.informeId;
+    let update = req.body;
+    Informes.findByIdAndUpdate(informeId, { $set: update }, { new: true }).exec()
+        .then(informeActualizado => {
+            res.status(200).send({ updated: true, informe: informeActualizado });
+        })
+        .catch(error => {
+            res.status(500).send({ updated: false, error, message: 'Ocurrio un error cuando se intentaba actualizar el informe' });
+        })
+}
+
 module.exports={
     agregarInforme,
+    actualizarDatosInforme,
     obtenerInformes
 }

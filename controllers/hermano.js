@@ -40,10 +40,6 @@ function actualizarDatosHermano(req, res) {
         })
 }
 
-function editarFamilia(req, res) {
-
-}
-
 function obtenerFamilias(req, res) {
     let congregacion = req.params.congregacion;
     Familias.find({ congregacion: congregacion }).sort('apellido').exec()
